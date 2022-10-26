@@ -1,12 +1,18 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { UserProps, users } from '@/data'
+import { $cookies } from '~/utils/nuxt-instance'
 
 @Module({ name: 'users', stateFactory: true, namespaced: true })
 export default class Users extends VuexModule {
   private users = [] as UserProps[]
   private user = {} as UserProps
+  private userLogged = {} as UserProps
 
   public get $single() {
+    return this.user
+  }
+
+  public get $loggedUser() {
     return this.user
   }
 
@@ -17,6 +23,11 @@ export default class Users extends VuexModule {
   @Mutation
   private SET_SINGLE(data: UserProps) {
     this.user = data
+  }
+
+  @Mutation
+  private SET_LOGGED_USER(data: UserProps) {
+    this.userLogged = data
   }
 
   @Mutation
@@ -43,5 +54,18 @@ export default class Users extends VuexModule {
   public destroy(id: number) {
     console.log(id)
     this.context.commit('SET_SINGLE', null)
+  }
+
+  @Action
+  public verify() {
+    if (!$cookies.get('token')) {
+      this.context.commit('SET_LOGGED_USER', null)
+
+      return
+    }
+
+    const userData = $cookies.get('user')
+
+    this.context.commit('SET_LOGGED_USER', userData)
   }
 }
