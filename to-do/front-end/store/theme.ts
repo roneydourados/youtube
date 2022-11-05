@@ -16,7 +16,7 @@ export default class Theme extends VuexModule {
 
   @Action
   public setTheme(darkMode: boolean) {
-    $cookies.set('theme', darkMode)
+    $cookies.set('theme', darkMode, { maxAge: 60 * 60 * 24 * 300000 })
 
     this.context.commit('SET_SINGLE', darkMode)
   }

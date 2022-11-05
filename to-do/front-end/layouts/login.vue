@@ -42,6 +42,8 @@ import Vue from 'vue'
 import { theme } from '@/store'
 
 export default Vue.extend({
+  middleware: 'guest',
+
   data: () => ({
     title: 'Projetos',
   }),

@@ -58,6 +58,7 @@ export default class Users extends VuexModule {
 
   @Action
   public verify() {
+    // se não tiver um token então sair fora
     if (!$cookies.get('token')) {
       this.context.commit('SET_LOGGED_USER', null)
 

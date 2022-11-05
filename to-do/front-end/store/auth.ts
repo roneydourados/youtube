@@ -37,7 +37,9 @@ export default class Auth extends VuexModule {
       maxAge: 60 * 60 * 24 * 30, // 30 dias de validade
     })
 
-    $cookies.set('user', user[0])
+    $cookies.set('user', user[0], { maxAge: 60 * 60 * 24 * 30 })
+
+    this.context.commit('UPDATE_TOKEN', accessToken)
   }
 
   @Action

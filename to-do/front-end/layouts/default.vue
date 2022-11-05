@@ -147,6 +147,7 @@ import Vue from 'vue'
 import { auth, theme, users } from '@/store'
 
 export default Vue.extend({
+  middleware: 'auth',
   data: () => ({
     clipped: false,
     drawer: true,
@@ -174,6 +175,10 @@ export default Vue.extend({
     $user() {
       return users.$loggedUser.name
     },
+  },
+
+  mounted() {
+    this.$vuetify.theme.dark = theme.$single
   },
 
   methods: {
