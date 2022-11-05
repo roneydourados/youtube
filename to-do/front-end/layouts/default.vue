@@ -67,7 +67,7 @@
       </div>
 
       <div class="ml-8">
-        <h3>Olá, Roney</h3>
+        <h3>Olá, {{ $user }}</h3>
       </div>
       <v-spacer />
 
@@ -94,7 +94,14 @@
 
       <v-tooltip bottom>
         <template #activator="{ on, attrs }">
-          <v-btn icon rounded class="mr-6" v-bind="attrs" v-on="on">
+          <v-btn
+            icon
+            rounded
+            class="mr-6"
+            v-bind="attrs"
+            v-on="on"
+            @click="logout"
+          >
             <v-icon
               :color="$vuetify.theme.dark ? 'grey lighten-2' : 'grey darken-4'"
             >
@@ -110,7 +117,7 @@
       </v-btn>
       -->
     </v-app-bar>
-    <v-main>
+    <v-main style="margin: 0 auto">
       <v-container>
         <Nuxt />
       </v-container>
@@ -137,7 +144,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { theme } from '@/store'
+import { auth, theme, users } from '@/store'
 
 export default Vue.extend({
   data: () => ({
@@ -149,7 +156,7 @@ export default Vue.extend({
       {
         icon: 'mdi-projector-screen-outline',
         title: 'Dashboard',
-        to: '/',
+        to: '/dashboard',
       },
       {
         icon: 'mdi-account-supervisor-outline',
@@ -163,11 +170,23 @@ export default Vue.extend({
     title: 'Projetos',
   }),
 
+  computed: {
+    $user() {
+      return users.$loggedUser.name
+    },
+  },
+
   methods: {
     setTheme(darkMode: boolean) {
       this.$vuetify.theme.dark = darkMode
 
       theme.setTheme(darkMode)
+    },
+
+    async logout() {
+      await this.$router.push('/')
+
+      auth.destroy()
     },
   },
 })

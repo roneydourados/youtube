@@ -13,7 +13,7 @@ export default class Users extends VuexModule {
   }
 
   public get $loggedUser() {
-    return this.user
+    return this.userLogged
   }
 
   public get $all() {
