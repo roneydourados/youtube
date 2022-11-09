@@ -1,11 +1,21 @@
 <template>
-  <div>
-    <h1>Projetos</h1>
-  </div>
+  <v-container class="d-flex flex-wrap" style="gap: 1rem; width: 100%" fluid>
+    <div v-for="project in $projects" :key="project.id">
+      <CardProject :project="project" />
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+import { projects } from '@/data'
+
+export default Vue.extend({
+  computed: {
+    $projects() {
+      return projects
+    },
+  },
+})
 </script>
