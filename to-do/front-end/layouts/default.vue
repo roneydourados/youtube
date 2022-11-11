@@ -50,7 +50,14 @@
       <div class="d-flex align-center" style="gap: 1rem; width: 30rem">
         <v-tooltip bottom color="grey darken-3">
           <template #activator="{ on, attrs }">
-            <v-btn fab small color="grey darken-3" v-bind="attrs" v-on="on">
+            <v-btn
+              fab
+              small
+              color="grey darken-3"
+              v-bind="attrs"
+              v-on="on"
+              @click="dialogNew = true"
+            >
               <v-icon color="white">mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -138,6 +145,8 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+
+    <NewProject :show="dialogNew" @close="dialogNew = false" />
   </v-app>
 </template>
 
@@ -149,6 +158,7 @@ import { auth, theme, users } from '@/store'
 export default Vue.extend({
   middleware: 'auth',
   data: () => ({
+    dialogNew: false,
     clipped: false,
     drawer: true,
     fixed: false,

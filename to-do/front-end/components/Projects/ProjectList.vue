@@ -9,12 +9,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { projects } from '@/data'
+import { projects } from '@/store'
 
 export default Vue.extend({
   computed: {
     $projects() {
-      return projects
+      return projects.$all
     },
   },
 })

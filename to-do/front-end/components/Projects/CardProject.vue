@@ -117,6 +117,23 @@
         </v-btn>
       </div>
     </v-card-actions>
+
+    <EditProject
+      :show="dialogEdit"
+      :project="project"
+      @close="dialogEdit = false"
+    />
+
+    <DeleteProject
+      :show="dialogDelete"
+      :project="project"
+      @close="dialogDelete = false"
+    />
+
+    <ProjectAttachment
+      :show="dialogAtachmment"
+      @close="dialogAtachmment = false"
+    />
   </v-card>
 </template>
 
@@ -124,11 +141,18 @@
 import Vue, { PropOptions } from 'vue'
 
 import { ProjectProps } from '@/data'
+import { files } from '@/store'
 
 export default Vue.extend({
   props: {
     project: { type: Object, required: true } as PropOptions<ProjectProps>,
   },
+
+  data: () => ({
+    dialogEdit: false,
+    dialogDelete: false,
+    dialogAtachmment: false,
+  }),
 
   computed: {
     $progress(): number {
@@ -142,10 +166,18 @@ export default Vue.extend({
   },
 
   methods: {
-    showAttachment() {},
+    showAttachment() {
+      files.index(this.project.id!.toString())
+
+      this.dialogAtachmment = true
+    },
     showTasks() {},
-    deleteProject() {},
-    editProject() {},
+    deleteProject() {
+      this.dialogDelete = true
+    },
+    editProject() {
+      this.dialogEdit = true
+    },
   },
 })
 </script>
