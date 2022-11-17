@@ -171,7 +171,11 @@ export default Vue.extend({
 
       this.dialogAtachmment = true
     },
-    showTasks() {},
+
+    async showTasks() {
+      await this.$router.push(`/tasks/${this.project.id}/tasks`)
+    },
+
     deleteProject() {
       this.dialogDelete = true
     },

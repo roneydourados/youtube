@@ -65,11 +65,13 @@
         </v-tooltip>
 
         <v-text-field
+          v-model="search"
           placeholder="Pesquisar..."
           filled
           rounded
           dense
           class="mt-6"
+          @input="filterProject"
         />
       </div>
 
@@ -153,7 +155,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { auth, theme, users } from '@/store'
+import { auth, theme, users, projects } from '@/store'
 
 export default Vue.extend({
   middleware: 'auth',
@@ -162,6 +164,7 @@ export default Vue.extend({
     clipped: false,
     drawer: true,
     fixed: false,
+    search: '',
 
     items: [
       {
@@ -202,6 +205,10 @@ export default Vue.extend({
       await this.$router.push('/')
 
       auth.destroy()
+    },
+
+    filterProject() {
+      projects.index(this.search)
     },
   },
 })
